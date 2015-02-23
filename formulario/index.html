@@ -1,0 +1,897 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0054)http://www.webbymonks.com/plugintemplate/86/index.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+	<meta name="viewport" content="width=device-width, initial-scale=1.0 ">
+    <title></title>
+    <link href="./index_files/style.css" rel="stylesheet" type="text/css">
+    <link href="./index_files/jquery.selectBox.css" rel="stylesheet" type="text/css">
+    <link href="./index_files/animate.css" rel="stylesheet" type="text/css">
+<link href="./index_files/component.css" rel="stylesheet" type="text/css">
+    <link href="./index_files/atooltip.css" rel="stylesheet" type="text/css">
+    <link href="./index_files/css" rel="stylesheet" type="text/css">
+    <link href="./index_files/css(1)" rel="stylesheet" type="text/css">
+    <script src="./index_files/jquery-1.10.1.min.js"></script>
+    <link rel="stylesheet" href="./index_files/tip-skyblue.css" type="text/css">
+    <script src="./index_files/jquery.selectBox.js"></script>
+
+    <script type="text/javascript" src="./index_files/jquery.poshytip.js"></script>
+<!--<script type="text/javascript">
+$(document).ready(function(e) {	
+$('#gender').selectBox();
+    $(".label").click(function(){
+		if($(this).hasClass("sellabel")){
+			$(this).removeClass("sellabel");	
+		}
+		else
+		{
+			$(this).addClass("sellabel");
+	    }
+	});
+	
+	$('#genderSelection').text($( "#gender option:selected" ).text());
+	$('.seleWrapper').click(function(){
+	$('#genderSelection').text($( "#gender option:selected" ).text());	
+	});
+
+	
+	var valid_userName = false;
+	var valid_email = false;
+	var valid_password = false;
+	var valid_confirmPassword = false;
+	var valid_fName = false;
+	var valid_lName = false;
+	var valid_gender = false;
+	var valid_ourPolicy = false;
+	var errorDiv = $('<div class="error-box error1"><div class="error"></div></div>');
+
+	$('#userName').focus(function(){ $(this).addClass('focus');}).blur(function(){ $(this).removeClass('focus')
+		if($('#userName').val()!=''){
+		validateUserName();
+		}
+	})
+	
+	function validateUserName(){
+		
+		if($('#userName').val().length < 3){
+			valid_userName =false;
+			//$('#userName').parent('.elementWrapper').addClass('error');
+			$('#userName').addClass('error');
+		}
+		else{
+			$('#userName').removeClass('error');
+			valid_userName =true;
+			$('#userName').parent('.elementWrapper').removeClass('error');
+		}
+		if(!valid_userName){$('#userName').parent().find('.error-box').remove();$('<div class="error-box error1"><div class="error-box-left "></div> <div class="error-box-mid"></div> <div class="error-box-right"></div><div class="clear"></div></div>').prependTo($('#userName').parent()).find('h3').text('User name too short');}else{ $('#userName').parent().find('.error-box').removeClass('error').addClass('right').fadeOut(); } 
+		return valid_userName;
+	}
+	
+	
+	
+	$('#email').focus(function(){$(this).addClass('focus'); }).blur(function(){
+		$(this).removeClass('focus');
+		if($('#email').val()!=''){
+		validateEmail();
+		}
+		});
+		
+	function validateEmail(){
+		var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+	           if (!filter.test($('#email').val())){
+				valid_email = false;   
+				$('#email').addClass('error');
+			   }else{
+				   $('#email').removeClass('error');
+				   $('#email').parent('.elementWrapper').removeClass('error');
+				$('#error-box h2').text('');$('#error-box ').slideUp(); valid_email = true; 
+			   }
+		 if(!valid_email){$('#email').parent().find('.error-box').remove(); $('<div class="error-box error1"><div class="error-box-left"></div> <div class="error-box-mid"></div> <div class="error-box-right"></div><div class="clear"></div></div>').prependTo($('#email').parent()).find('h3').text('Invalid Email ID');}else{$('#email').parent().find('.error-box').removeClass('error').addClass('right').fadeOut();;}  
+	return  valid_email;		   
+		
+	}	
+    
+	
+	$('#password').focus(function(){$(this).addClass('focus'); }).blur(function(){
+		$(this).removeClass('focus');
+		if($('#password').val()!=''){
+		     validatePassword();}
+			});
+	function validatePassword(){
+		if($('#password').val().length <1){ // invalid
+			// $('#error-box').find('h2').removeClass('longErr').text('Password');$('#error-box').slideDown();   
+			  valid_password = false;
+			  $('#password').addClass('error');
+			}else{ 
+			      valid_password = true;
+			     // $('#error-box h2').text('');$('#error-box ').slideUp(); // valid
+				   $('#password').removeClass('error');
+		  }
+		   if(!valid_password){$('#password').parent().find('.error-box').remove();$('<div class="error-box error1"><div class="error-box-left"></div> <div class="error-box-mid"></div> <div class="error-box-right"></div><div class="clear"></div></div>').prependTo($('#password').parent()).find('h3').text('Invalid Password');;}else{$('#password').parent().find('.error-box').removeClass('error').addClass('right').fadeOut();}  
+		 return  valid_password;
+
+		}
+	
+	
+    $('#passwordConfirm').focus(function(){ $(this).addClass('focus'); }).blur(function(){
+		if($('#password').val()!='' && $('#password').val()>4){
+
+		validateConfirmPassword();}
+				$(this).removeClass('focus');
+		
+	});
+	
+	function validateConfirmPassword(){
+	 
+	    if( $('#password').val() != $('#passwordConfirm').val() || $('#password').val().length < 1 ){
+		    valid_confirmPassword = false;
+			 $('#passwordConfirm').addClass('error');
+			//$('#error-box').find('h2').removeClass('longErr').text('Confirm Password');$('#error-box').slideDown();
+		}else{ 
+		      // $('#error-box h2').text('');$('#error-box ').slideUp(); // valid
+			   $('#passwordConfirm').removeClass('error');
+			    valid_confirmPassword = true;
+		           }
+				   
+		 if(!valid_confirmPassword){$('#passwordConfirm').parent().find('.error-box').remove();$('<div class="error-box error1"><div class="error-box-left"></div> <div class="error-box-mid"></div> <div class="error-box-right"></div><div class="clear"></div></div>').prependTo($('#passwordConfirm').parent()).find('h3').text('Invalid Password');}else{$('#passwordConfirm').parent().find('.error-box').removeClass('error').addClass('right').fadeOut();}  		   
+		 return valid_confirmPassword;		   
+			
+	}
+	
+	
+	$('#fname').focus(function(){ $(this).addClass('focus'); }).blur(function(){
+		 $(this).removeClass('focus');
+		 if($('#fname').val() !=''){
+		 validateFirstName();}
+	});
+	function validateFirstName(){
+		 if($('#fname').val().length < 3){
+			valid_fName =false;
+			 $('#fname').addClass('error');
+		}
+		else{
+			 $('#fname').removeClass('error');
+			valid_fName =true;
+		}
+		//if(!valid_fName){ $('#error-box').find('h2').removeClass('longErr').text('Invalid First Name');$('#error-box').slideDown();}else{ $('#error-box h2').text('');$('#error-box ').slideUp();} 
+		 if(!valid_fName){$('#fname').parent().find('.error-box').remove();$('<div class="error-box error1"><div class="error-box-left"></div> <div class="error-box-mid"></div> <div class="error-box-right"></div><div class="clear"></div></div>').prependTo($('#fname').parent()).find('h3').text('Invalid First Name');}else{$('#fname').parent().find('.error-box').removeClass('error').addClass('right').fadeOut();}  		   
+	}
+	
+	
+
+	
+	$('#lname').focus(function(){ $(this).addClass('focus'); }).blur(function(){
+		 $(this).removeClass('focus');
+		  if($('#lname').val() !=''){
+		validateLastName();}
+		
+	});
+	
+	function validateLastName(){
+		if($('#lname').val().length < 3){
+			valid_lName =false;
+			 $('#lname').addClass('error');
+		}
+		else{
+			valid_lName =true;
+			 $('#lname').removeClass('error');
+		}
+		 if(!valid_lName){$('#lname').parent().find('.error-box').remove();$('<div class="error-box error1"><div class="error-box-left"></div> <div class="error-box-mid"></div> <div class="error-box-right"></div><div class="clear"></div></div>').prependTo($('#lname').parent()).find('h3').text('Invalid Last Name');}else{$('#lname').parent().find('.error-box').removeClass('error').addClass('right').fadeOut();}  		   
+		return  valid_lName;
+	}
+	
+	
+
+	
+	$('#gender').focus(function(){
+	  // $('.seleWrapper').addClass('focus');
+	  // $(this).parent().addClass('focus');	
+	}).blur(function(){
+		//validateGender();
+		$('.seleWrapper').removeClass('focus');
+		$(this).parent().removeClass('focus');
+	});
+	
+	$('#gender').on('change', function() {
+    validateGender();
+  });
+	
+	function validateGender(){
+	if($( "#gender option:selected" ).text() == 'Gender' ){ 
+	   valid_gender = false;
+	   $('#gender').parent().parent().find('a.selectBox').addClass('error');
+	   
+	  }else{ 
+	        valid_gender = true;
+			  $('#gender').parent().parent().find('a.selectBox').removeClass('error');
+	}
+	 if(!valid_gender){$('#gender').parent().parent().find('.error-box').remove();$('<div class="error-box error1"><div class="error-box-left"></div> <div class="error-box-mid"></div> <div class="error-box-right"></div><div class="clear"></div></div>').prependTo($('#gender').parent().parent()).find('h3').text('Invalid Gender');}else{$('#gender').parent().parent().find('.error-box').removeClass('error').addClass('right').fadeOut();}  		   
+	return valid_gender;
+	}
+	
+	$('#agreement').click(function(){
+		validatePolicy();
+	});
+	
+	
+	$('#terms').focus(function(){
+		$('#agreement').addClass('focus');
+	}).blur(function(){
+		$('#agreement').removeClass('focus');
+		
+		//validatePolicy();
+	});
+
+
+	
+	function validatePolicy(){
+		 if(!$('#agreement').hasClass('sellabel')){ 
+		   valid_ourPolicy = false;
+			//$('#error-box').find('h2').removeClass('longErr').text('Our Policy');$('#error-box').slideDown();
+			$('#agreement').addClass('error');
+		}else{valid_ourPolicy = true; 
+		      //$('#error-box h2').text('');$('#error-box ').slideUp(); // valid
+			   $('#agreement').removeClass('error');
+			  }
+		 $('#agreement').removeClass('focus');
+		  if(!valid_ourPolicy){$('#agreement').parent().find('.error-box').remove();$('<div class="error-box error1"><div class="error-box-left"></div> <div class="error-box-mid"></div> <div class="error-box-right"></div><div class="clear"></div></div>').prependTo($('#agreement').parent()).find('h3').text('Please Accept Policy');}else{$('#agreement').parent().find('.error-box').removeClass('error').addClass('right').fadeOut();}  		   
+		 return valid_ourPolicy;
+	}
+	
+	
+	$('#offers').focus(function(){
+		 $('#offer').addClass('focus');
+	}).blur(function(){
+		 $('#offer').removeClass('focus');
+	});
+
+	$('#formSubmit').click(function(){
+		var errorMsg ='';
+		validateUserName();
+		validateEmail();
+		validateGender();
+		validatePolicy();
+		validatePassword();
+		validateConfirmPassword();
+		validateFirstName();
+		validateLastName();
+		validateGender();
+		validatePolicy();
+		//console.log(validateUserName(),validateEmail(),validateGender(),validatePolicy(),validatePassword(),validateConfirmPassword(),validateFirstName(),validateLastName(),validateGender(),validatePolicy());
+		var errCount=0;
+		if(!valid_userName){ 
+		errorMsg = errorMsg +' User Name, ';
+		errCount++;
+		}
+		
+		
+		if(!valid_userName){$('#userName').parent().find('.error-box').remove(); $('<div class="error-box error1"><div class="error-box-left"></div> <div class="error-box-mid"></div> <div class="error-box-right"></div><div class="clear"></div></div>').prependTo($('#userName').parent()).find('h3').text('Invalid User Name');}else{ $('#userName').parent().find('.error-box').removeClass('error').addClass('right').fadeOut();} 
+		if(!valid_email){$('#email').parent().find('.error-box').remove(); $('<div class="error-box error1"><div class="error-box-left"></div> <div class="error-box-mid"></div> <div class="error-box-right"></div><div class="clear"></div></div>').prependTo($('#email').parent()).find('h3').text('Invalid Email ID');;}else{$('#email').parent().find('.error-box').removeClass('error').addClass('right').fadeOut();}  
+		if(!valid_password){$('#password').parent().find('.error-box').remove(); $('<div class="error-box error1"><div class="error-box-left"></div> <div class="error-box-mid"></div> <div class="error-box-right"></div><div class="clear"></div></div>').prependTo($('#password').parent()).find('h3').text('Invalid Password');;}else{$('#password').parent().find('.error-box').removeClass('error').addClass('right').fadeOut();}  
+		if(!valid_confirmPassword){$('#passwordConfirm').parent().find('.error-box').remove();$('<div class="error-box error1"><div class="error-box-left"></div> <div class="error-box-mid"></div> <div class="error-box-right"></div><div class="clear"></div></div>').prependTo($('#passwordConfirm').parent()).find('h3').text('Invalid Confirm Password');}else{$('#passwordConfirm').parent().find('.error-box').removeClass('error').addClass('right').fadeOut();}  		   
+		if(!valid_fName){$('#fname').parent().find('.error-box').remove();$('<div class="error-box error1"><div class="error-box-left"></div> <div class="error-box-mid"></div> <div class="error-box-right"></div><div class="clear"></div></div>').prependTo($('#fname').parent()).find('h3').text('Invalid First Name');;}else{$('#fname').parent().find('.error-box').removeClass('error').addClass('right').fadeOut();}  		   
+		if(!valid_lName){$('#lname').parent().find('.error-box').remove();$('<div class="error-box error1"><div class="error-box-left"></div> <div class="error-box-mid"></div> <div class="error-box-right"></div><div class="clear"></div></div>').prependTo($('#lname').parent()).find('h3').text('Invalid Last Name');;}else{$('#lname').parent().find('.error-box').removeClass('error').addClass('right').fadeOut();}  		   
+		if(!valid_gender){$('#gender').parent().parent().find('.error-box').remove();$('<div class="error-box error1"><div class="error-box-left"></div> <div class="error-box-mid"></div> <div class="error-box-right"></div><div class="clear"></div></div>').prependTo($('#gender').parent().parent()).find('h3').text('Invalid Gender');}else{$('#gender').parent().parent().find('.error-box').removeClass('error').addClass('right').fadeOut();}  		   
+		 if(!valid_ourPolicy){$('#agreement').parent().find('.error-box').remove();$('<div class="error-box error1"><div class="error-box-left"></div> <div class="error-box-mid"></div> <div class="error-box-right"></div><div class="clear"></div></div>').prependTo($('#agreement').parent()).find('h3').text('Please Accept Our Policy');}else{$('#agreement').parent().find('.error-box').removeClass('error').addClass('right').fadeOut();}  		  
+		
+		if(!valid_email){ 
+		errorMsg = errorMsg +' Email ID, ';
+		errCount++;
+		}
+		
+		if(!valid_password){ 
+		errorMsg = errorMsg +' Password, ';
+		errCount++;
+		}
+		
+		if(!valid_confirmPassword){ 
+		errorMsg = errorMsg +' Confirm Password, ';
+		errCount++;
+		}
+		
+		if(!valid_fName){ 
+		errorMsg = errorMsg +' First Name, ';
+		errCount++;
+		}
+		
+		if(!valid_lName){ 
+		errorMsg = errorMsg +' Last Name, ';
+		errCount++;
+		}
+		
+		if(!valid_gender){
+		errorMsg = errorMsg +' Gender, ';
+		errCount++;	
+		}
+		
+		if(!valid_ourPolicy){
+		errorMsg = errorMsg +' Our Policy,';
+		errCount++;	
+		}
+		
+		
+		
+	});
+	
+	
+
+
+$('#pageForm input, #pageForm select, #pageForm label').wrap('<div class="elementWrapper"></div>');
+	
+	$('#formContainer #pageForm').submit(function(e){ e.preventDefault();
+	
+ 	
+	
+	});
+});
+</script>    -->
+
+<script type="text/javascript">
+
+$(document).ready(function(e) {	
+
+
+
+$('#gender').selectBox();
+    $(".label").click(function(){
+		if($(this).hasClass("sellabel")){
+			$(this).removeClass("sellabel");	
+		}
+		else
+		{
+			$(this).addClass("sellabel");
+	    }
+	});
+	
+	$('#genderSelection').text($( "#gender option:selected" ).text());
+	$('.seleWrapper').click(function(){
+	$('#genderSelection').text($( "#gender option:selected" ).text());	
+	});
+	
+	  
+
+	
+	var valid_userName = false;
+	var valid_email = false;
+	var valid_password = false;
+	var valid_confirmPassword = false;
+	var valid_fName = false;
+	var valid_lName = false;
+	var valid_gender = false;
+	var valid_ourPolicy = false;
+	var errorDiv = $('<div class="error-box"><div class="error-box-left"></div> <div class="error-box-mid"><h3>Invalid  address</h3></div> <div class="error-box-right"></div><div class="clear"></div></div>');
+
+	$('#userName').focus(function(){ $(this).addClass('focus');}).blur(function(){ $(this).removeClass('focus')
+	   
+	  
+	  // if($('#userName').val() !="" &&!$('#userName').val().length < 3){
+			validateUserName();
+			
+		//}
+		$('#a_userName').poshytip({
+				className: 'tip-skyblue',
+				bgImageFrameSize: 9,
+				offsetX: 0,
+				offsetY: 20
+			});
+		
+	})
+	
+	function validateUserName(){
+		
+		if($('#userName').val().length < 3){
+			valid_userName =false;
+			$('#userName').addClass('error');
+		}
+		else{
+			$('#userName').removeClass('error');
+			valid_userName =true;
+		}
+		var errMessage;
+		if($('#userName').val().length<1){ errMessage="Please Enter User Name"; }else
+		if($('#userName').val().length<3){ errMessage="User Name too Short"; }
+
+		if(!valid_userName){$('#userName').parent().find('#a_userName').remove();$('<a id="a_userName"  class="toltip exampleTip" href="#" title="'+errMessage+'"><div class="error-box"><div class="error-box-left"></div> <div class="error-box-mid"><h3></h3></div> <div class="error-box-right"></div><div class="clear"></div></div></a>').appendTo($('#userName').parent()).find('h3').text();}else{ $('#userName').parent().find('#a_userName').remove();} 
+		
+		return valid_userName;
+	}
+	
+	
+	
+	$('#email').focus(function(){$(this).addClass('focus'); }).blur(function(){
+		$(this).removeClass('focus');
+		//if($('#email').val()!=""){
+		 validateEmail();
+		
+		//}
+		
+		$('#a_email').poshytip({
+				className: 'tip-skyblue',
+				bgImageFrameSize: 9,
+				offsetX: 0,
+				offsetY: 20
+			});
+		});
+		
+	function validateEmail(){
+		var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+	           if (!filter.test($('#email').val())){
+				valid_email = false;   
+				$('#email').addClass('error');
+			   }else{
+				$('#error-box h2').text('');$('#error-box ').slideUp(); valid_email = true; 
+				$('#email').removeClass('error');
+			   }
+			   
+		 var errMessage;
+		if($('#email').val().length<1){ errMessage="Please Enter Email Id"; }else
+		if($('#email').val().length<3){ errMessage="Please Enter A Valid Email Id"; }	   
+		 if(!valid_email){$('#email').parent().find('#a_email').remove(); $('<a id="a_email"  class="toltip exampleTip" href="#" title="'+errMessage+'"><div class="error-box"><div class="error-box-left"></div> <div class="error-box-mid"><h3></h3></div> <div class="error-box-right"></div><div class="clear"></div></div></a>').appendTo($('#email').parent()).find('h3').text();}else{$('#email').parent().find('#a_email').remove();}  
+	return  valid_email;		   
+		
+	}	
+    
+	
+	$('#password').focus(function(){$(this).addClass('focus'); }).blur(function(){
+		$(this).removeClass('focus');
+		// if($(this).val()!='' ){
+		     validatePassword();
+		 
+		//}
+		$('#a_password').poshytip({
+				className: 'tip-skyblue',
+				bgImageFrameSize: 9,
+				offsetX: 0,
+				offsetY: 20
+			});
+			});
+	function validatePassword(){
+		if($('#password').val().length < 3){ // invalid
+			// $('#error-box').find('h2').removeClass('longErr').text('Password is too short');$('#error-box').slideDown();   
+			  valid_password = false;
+			   $('#password').addClass('error');
+			   
+			}else{ 
+			      valid_password = true;
+				  $('#password').removeClass('error');
+			   //   $('#error-box h2').text('');$('#error-box ').slideUp(); // valid
+		  }
+		  
+		  var errMessage;
+		if($('#password').val().length<1){ errMessage="Please Enter Password"; }else
+		if($('#password').val().length<3){ errMessage="Password too Short week"; }
+		  
+		   if(!valid_password){$('#password').parent().find('#a_password').remove();$('<a id="a_password"  class="toltip exampleTip" href="#" title="'+errMessage+'"><div class="error-box"><div class="error-box-left"></div> <div class="error-box-mid"><h3></h3></div> <div class="error-box-right"></div><div class="clear"></div></div></a>').appendTo($('#password').parent()).find('h3').text();}else{$('#password').parent().find('#a_password').remove();}  
+		 return  valid_password;
+
+		}
+	
+	
+    $('#passwordConfirm').focus(function(){ $(this).addClass('focus'); }).blur(function(){
+		$(this).removeClass('focus');
+		// if($('#passwordConfirm').val()!=''){
+		 validateConfirmPassword();
+		 
+		// }
+		 	$('#a_passwordConfirm').poshytip({
+				className: 'tip-skyblue',
+				bgImageFrameSize: 9,
+				offsetX: 0,
+				offsetY: 20
+			});
+		
+	});
+	
+	function validateConfirmPassword(){
+	 
+	    if( $('#password').val() != $('#passwordConfirm').val() ){
+		     valid_confirmPassword = false;
+			  $('#passwordConfirm').addClass('error');
+			//$('#error-box').find('h2').removeClass('longErr').text('Confirm Password');$('#error-box').slideDown();
+		}else{ 
+		      // $('#error-box h2').text('');$('#error-box ').slideUp(); // valid
+			    valid_confirmPassword = true;
+				 $('#passwordConfirm').removeClass('error');
+		           }
+		 if($('#password').val().length <1){
+			 //var errMsg = "Need to Enter Password first"
+		}
+		 var errMessage ="Confirm Password Did Not Match";
+				   
+		 if(!valid_confirmPassword){$('#passwordConfirm').parent().find('#a_passwordConfirm').remove();$('<a id="a_passwordConfirm"  class="toltip exampleTip" href="#" title="'+errMessage+'"><div class="error-box"><div class="error-box-left"></div> <div class="error-box-mid"><h3></h3></div> <div class="error-box-right"></div><div class="clear"></div></div></a>').appendTo($('#passwordConfirm').parent()).find('h3').text('');}else{$('#passwordConfirm').parent().find('#a_passwordConfirm').remove();}  		   
+		 return valid_confirmPassword;		   
+			
+	}
+	
+	
+	$('#fname').focus(function(){ $(this).addClass('focus'); }).blur(function(){
+		 $(this).removeClass('focus');
+		 //if($(this).val()!='' && $('#fname').val().length < 3){
+			 validateFirstName();
+			 // $(this).addClass('error');
+		// }
+		 $('#a_fname').poshytip({
+				className: 'tip-skyblue',
+				bgImageFrameSize: 9,
+				offsetX: 0,
+				offsetY: 20
+			});
+	});
+	
+	function validateFirstName(){
+		 if($('#fname').val().length < 3){
+			valid_fName =false;
+			 $('#fname').addClass('error');
+		}
+		else{
+			valid_fName =true;
+			$('#fname').removeClass('error');
+		}
+		var errMessage;
+		if($('#fname').val().length<1){ errMessage="Please Enter First Name"; }else
+		if($('#fname').val().length<3){ errMessage="First Name too short"; }
+		
+		//if(!valid_fName){ $('#error-box').find('h2').removeClass('longErr').text('Invalid First Name');$('#error-box').slideDown();}else{ $('#error-box h2').text('');$('#error-box ').slideUp();} 
+		 if(!valid_fName){$('#fname').parent().find('#a_fname').remove();$('<a id="a_fname"  class="toltip exampleTip" href="#" title="'+errMessage+'"><div class="error-box"><div class="error-box-left"></div> <div class="error-box-mid"><h3></h3></div> <div class="error-box-right"></div><div class="clear"></div></div></a>').appendTo($('#fname').parent()).find('h3').text();}else{$('#fname').parent().find('.error-box').remove();}  		   
+	}
+	
+	
+
+	
+	$('#lname').focus(function(){ $(this).addClass('focus'); }).blur(function(){
+		 $(this).removeClass('focus');
+		// if($(this).val()!='' && $('#lname').val().length < 3){ 
+		 validateLastName();
+		 
+		//}
+		
+		$('#a_lname').poshytip({
+				className: 'tip-skyblue',
+				bgImageFrameSize: 9,
+				offsetX: 0,
+				offsetY: 20
+			});
+	});
+	
+	function validateLastName(){
+		if($('#lname').val().length < 3){
+			valid_lName =false;
+			$('#lname').addClass('error');
+		}
+		else{
+			valid_lName =true;
+			$('#lname').removeClass('error');
+		}
+		var errMessage;
+		if($('#fname').val().length<1){ errMessage="Please Enter Last Name"; }else
+		if($('#fname').val().length<3){ errMessage="Last Name too short"; }
+		if(!valid_lName){$('#lname').parent().find('#a_lname').remove();$('<a id="a_lname"  class="toltip exampleTip" href="#" title="'+errMessage+'"><div class="error-box"><div class="error-box-left"></div> <div class="error-box-mid"><h3></h3></div> <div class="error-box-right"></div><div class="clear"></div></div></a>').appendTo($('#lname').parent()).find('h3').text();}else{$('#lname').parent().find('#a_lname').remove();}  		   
+		return  valid_lName;
+	}
+	
+	
+	$('#gender').focus(function(){
+	   $('.seleWrapper').addClass('focus');
+	   $(this).parent().addClass('focus');	
+	}).blur(function(){
+		validateGender();
+		$('.seleWrapper').removeClass('focus');
+		$(this).parent().removeClass('focus');
+	});
+	
+	$('#gender').on('change', function() {
+    validateGender();
+	$('#a_gender').poshytip({
+				className: 'tip-skyblue',
+				bgImageFrameSize: 9,
+				offsetX: 0,
+				offsetY: 20
+			});
+  });
+	
+	function validateGender(){
+	if($( "#gender option:selected" ).text() == 'Gender' ){ 
+	   valid_gender = false;
+	   $('#gender').find('h2').removeClass('longErr').text('Invalid First Name');$('#error-box').slideDown();
+	    $('#gender').parent().parent().find('a.selectBox').addClass('error');
+	  }else{ 
+	        valid_gender = true;
+		    $('#error-box h2').text('');$('#error-box ').slideUp();
+			$('#gender').parent().parent().find('a.selectBox').removeClass('error');
+	}
+	
+	//if($( "#gender option:selected" ).text() == 'Gender' ){}
+	
+	var errMessage ="Please Select Gender"
+		
+	 if(!valid_gender){$('#gender').parent().parent().find('#a_gender').remove();$('<a id="a_gender"  class="toltip exampleTip" href="#" title="'+errMessage+'"><div class="error-box"><div class="error-box-left"></div> <div class="error-box-mid"><h3></h3></div> <div class="error-box-right"></div><div class="clear"></div></div></a>').appendTo($('#gender').parent().parent()).find('h3').text();}else{$('#gender').parent().parent().find('#a_gender').remove();}  		   
+	return valid_gender;
+	}
+	
+	$('#agreement').click(function(){
+		validatePolicy();
+		$('#a_agreement').poshytip({
+				className: 'tip-skyblue',
+				bgImageFrameSize: 9,
+				offsetX: 0,
+				offsetY: 20
+			});
+	});
+	
+	
+	$('#terms').focus(function(){
+		$('#agreement').addClass('focus');
+	}).blur(function(){
+		$('#agreement').removeClass('focus');
+		validatePolicy();
+	});
+
+
+	
+	function validatePolicy(){
+		 if(!$('#agreement').hasClass('sellabel')){ 
+		   valid_ourPolicy = false;
+			$('#error-box').find('h2').removeClass('longErr').text('Our Policy');$('#error-box').slideDown();
+			 $('#agreement').addClass('error');
+		}else{valid_ourPolicy = true; 
+		      $('#error-box h2').text('');$('#error-box ').slideUp(); // valid
+			  $('#agreement').removeClass('error');
+			  }
+		var errMessage ="Please Accept Our Policy";	  
+		 $('#agreement').removeClass('focus');
+		  if(!valid_ourPolicy){$('#agreement').parent().find('#a_agreement').remove();$('<a id="a_agreement"  class="toltip exampleTip" href="#" title="'+errMessage+'"><div class="error-box"><div class="error-box-left"></div> <div class="error-box-mid"><h3></h3></div> <div class="error-box-right"></div><div class="clear"></div></div></a>').appendTo($('#agreement').parent()).find('h3').text();}else{$('#agreement').parent().find('#a_agreement').remove();}  		   
+		 return valid_ourPolicy;
+	}
+	
+	
+	$('#offers').focus(function(){
+		 $('#offer').addClass('focus');
+	}).blur(function(){
+		 $('#offer').removeClass('focus');
+	});
+
+	$('#formSubmit').click(function(){
+		var errorMsg ='';
+		validateUserName();
+		
+		validateEmail();
+		validateGender();
+		validatePolicy();
+		validatePassword();
+		validateConfirmPassword();
+		validateFirstName();
+		validateLastName();
+		validateGender();
+		validatePolicy();
+		//console.log(validateUserName(),validateEmail(),validateGender(),validatePolicy(),validatePassword(),validateConfirmPassword(),validateFirstName(),validateLastName(),validateGender(),validatePolicy());
+		var errMsg_userName;
+		var errMsg_email;
+		var errMsg_password;
+		var errMsg_confirmPassword;
+		var errMsg_fName;
+		var errMsg_lName;
+		var errMsg_geder;
+		var errMsg_ourPolicy;
+
+		
+		var errCount=0;
+		
+		if(!valid_userName){ 
+		
+		if($('#userName').val().length<1){ errMsg_userName="Please Enter User Name"; }else
+		if($('#userName').val().length<3){ errMsg_userName="User Name too Short"; }
+		
+		}
+		
+		if(!valid_email){ 
+		
+		if($('#email').val().length<1){ errMsg_email="Please Enter Email Id";}else
+		if($('#email').val().length<3){ errMsg_email="Please Enter A Valid Email Id"; }
+		}
+		
+		if(!valid_password){ 
+		 
+		if($('#password').val().length<1){ errMsg_Password="Please Enter Password"; }else
+		if($('#password').val().length<3){ errMsg_password="Password Is Too Short"; }
+		}
+		
+		if(!valid_confirmPassword){ 
+		
+		
+		if($('#password').val().length<1){ errMsg_confirmPassword ="Please Enter Password First"; }
+		if($('#password').val().length > 2 && $('#passwordConfirm').val() != $('#password').val() ){ errMsg_confirmPassword ="Confirm Password did not Match"; }
+		}
+		
+		if(!valid_fName){ 
+		if($('#fname').val().length<1){ errMsg_fName="Please Enter Frist Name"; }else
+		if($('#fname').val().length<3){ errMsg_fName="First Name too short"; }
+		}
+		
+		if(!valid_lName){
+		 
+		if($('#lname').val().length<1){ errMsg_lName="Please Enter Last Name"; }else
+		if($('#lname').val().length<3){ errMsg_lName="Last Name too short"; }
+		}
+		
+		if(!valid_gender){
+			 
+		errMsg_gender = 'Please Select Gender' ;
+		}
+		
+		if(!valid_ourPolicy){
+		 
+		 errMsg_ourPolicy = 'Please Accept Our Policy' ;
+		}
+		
+		
+		if(!valid_userName){$('#userName').parent().find('#a_userName').remove(); $('<a id="a_userName"  class="toltip exampleTip" href="#" title="'+errMsg_userName+'"><div class="error-box"><div class="error-box-left"></div> <div class="error-box-mid"><h3></h3></div> <div class="error-box-right"></div><div class="clear"></div></div></a>').appendTo($('#userName').parent()).find('h3').text();}else{ $('#userName').parent().find('#a_userName').remove();} 
+		if(!valid_email){$('#email').parent().find('#a_email').remove(); $('<a id="a_email"  class="toltip exampleTip" href="#" title="'+errMsg_email+'"><div class="error-box"><div class="error-box-left"></div> <div class="error-box-mid"><h3></h3></div> <div class="error-box-right"></div><div class="clear"></div></div></a>').appendTo($('#email').parent()).find('h3').text();}else{$('#email').parent().find('#a_email').remove();}  
+		if(!valid_password){$('#password').parent().find('#a_password').remove(); $('<a id="a_password"  class="toltip exampleTip" href="#" title="'+errMsg_Password+'"><div class="error-box"><div class="error-box-left"></div> <div class="error-box-mid"><h3></h3></div> <div class="error-box-right"></div><div class="clear"></div></div>').appendTo($('#password').parent()).find('h3').text();;}else{$('#password').parent().find('#a_password').remove();}  
+		if(!valid_confirmPassword){$('#passwordConfirm').parent().find('#a_passwordConfirm').remove();$('<a id="a_passwordConfirm"  class="toltip exampleTip" href="#" title="'+errMsg_confirmPassword+'"><div class="error-box"><div class="error-box-left"></div> <div class="error-box-mid"><h3></h3></div> <div class="error-box-right"></div><div class="clear"></div></div></a>').appendTo($('#passwordConfirm').parent()).find('h3').text();}else{$('#a_passwordConfirm').parent().find('.error-box').remove();}  		   
+		if(!valid_fName){$('#fname').parent().find('#a_fname').remove();$('<a id="a_fname"  class="toltip exampleTip" href="#" title="'+errMsg_fName+'"><div class="error-box"><div class="error-box-left"></div> <div class="error-box-mid"><h3></h3></div> <div class="error-box-right"></div><div class="clear"></div></div></a>').appendTo($('#fname').parent()).find('h3').text();;}else{$('#fname').parent().find('#a_fname').remove();}  		   
+		if(!valid_lName){$('#lname').parent().find('#a_lname').remove();$('<a id="a_lname"  class="toltip exampleTip" href="#" title="'+errMsg_lName+'"><div class="error-box"><div class="error-box-left"></div> <div class="error-box-mid"><h3></h3></div> <div class="error-box-right"></div><div class="clear"></div></div></a>').appendTo($('#lname').parent()).find('h3').text();;}else{$('#lname').parent().find('#a_lname').remove();}  		   
+		if(!valid_gender){$('#gender').parent().parent().find('#a_gender').remove();$('<a id="a_gender"  class="toltip exampleTip" href="#" title="'+errMsg_gender+'"><div class="error-box"><div class="error-box-left"></div> <div class="error-box-mid"><h3></h3></div> <div class="error-box-right"></div><div class="clear"></div></div></a>').appendTo($('#gender').parent().parent()).find('h3').text();}else{$('#gender').parent().parent().find('#a_gender').remove();}  		   
+		 if(!valid_ourPolicy){$('#agreement').parent().find('#a_agreement').remove();$('<a id="a_agreement"  class="toltip exampleTip" href="#" title="'+errMsg_ourPolicy+'"><div class="error-box"><div class="error-box-left"></div> <div class="error-box-mid"><h3></h3></div> <div class="error-box-right"></div><div class="clear"></div></div></a>').appendTo($('#agreement').parent()).find('h3').text();}else{$('#agreement').parent().find('#a_agreement').remove();}  		  
+		 
+		 
+		 $('#a_userName').poshytip({
+				className: 'tip-skyblue',
+				bgImageFrameSize: 9,
+				offsetX: 0,
+				offsetY: 20
+			});
+			
+		 $('#a_email').poshytip({
+				className: 'tip-skyblue',
+				bgImageFrameSize: 9,
+				offsetX: 0,
+				offsetY: 20
+			});
+			
+			
+			 $('#a_password').poshytip({
+				className: 'tip-skyblue',
+				bgImageFrameSize: 9,
+				offsetX: 0,
+				offsetY: 20
+			});
+			
+			
+			 $('#a_passwordConfirm').poshytip({
+				className: 'tip-skyblue',
+				bgImageFrameSize: 9,
+				offsetX: 0,
+				offsetY: 20
+			});
+			
+			 $('#a_gender').poshytip({
+				className: 'tip-skyblue',
+				bgImageFrameSize: 9,
+				offsetX: 0,
+				offsetY: 20
+			});
+			
+			 $('#a_fname').poshytip({
+				className: 'tip-skyblue',
+				bgImageFrameSize: 9,
+				offsetX: 0,
+				offsetY: 20
+			});
+			
+			  $('#a_lname').poshytip({
+				className: 'tip-skyblue',
+				bgImageFrameSize: 9,
+				offsetX: 0,
+				offsetY: 20
+			});
+			
+		
+			  $('#a_agreement').poshytip({
+				className: 'tip-skyblue',
+				bgImageFrameSize: 9,
+				offsetX: 0,
+				offsetY: 20
+			});
+			
+		
+	});
+	
+	
+
+
+$('#pageForm input, #pageForm select, #pageForm label').wrap('<div class="elementWrapper"></div>');
+	
+	$('#formContainer #pageForm').submit(function(e){ e.preventDefault();
+	
+ 	
+	
+	});
+
+});
+</script>        
+<style id="poshytip-css-tip-skyblue" type="text/css">div.tip-skyblue{visibility:hidden;position:absolute;top:0;left:0;}div.tip-skyblue table.tip-table, div.tip-skyblue table.tip-table td{margin:0;font-family:inherit;font-size:inherit;font-weight:inherit;font-style:inherit;font-variant:inherit;vertical-align:middle;}div.tip-skyblue td.tip-bg-image span{display:block;font:1px/1px sans-serif;height:9px;width:9px;overflow:hidden;}div.tip-skyblue td.tip-right{background-position:100% 0;}div.tip-skyblue td.tip-bottom{background-position:100% 100%;}div.tip-skyblue td.tip-left{background-position:0 100%;}div.tip-skyblue div.tip-inner{background-position:-9px -9px;}div.tip-skyblue div.tip-arrow{visibility:hidden;position:absolute;overflow:hidden;font:1px/1px sans-serif;}</style></head>
+<body><div id="logo"><img src="./index_files/logo.jpg" width="152" height="39" title="Webby Monks" alt="Webby Monks"></div>
+ <div style="clear:both"></div>
+
+<div class="container"><!--container start here-->
+<div class="title-box">
+    <h2>Icon Based Validation</h2>
+            
+    </div>
+<div id="formContainer" class="comp-box"><!--comp-box start here-->
+<div class="form-inner">
+<form method="post" id="pageForm" action="">
+<div class="inner-contBox"><!--inner-contBox start here-->
+    <div class="form-title">
+            <h2>Registration form</h2>
+    </div>
+	<div class="border-line"></div>
+    <div class="formCont-Box">
+        <!--<div id="error-box" class="error-box">
+            <h2>Attention! Please enter a valid email address.</h2>
+        </div>-->
+        <ul class="first">
+            <li><div class="elementWrapper"><input id="userName" type="text" name="form" placeholder="Username" title="Please Enter User Name	" class="textbg1 fromfield"></div></li>
+            <li><div class="elementWrapper"><input id="email" type="text" name="form" placeholder="Email Address" title="Please Enter Valid Email Id" class="textbg2 fromfield error"><a id="a_email" class="toltip exampleTip" href="http://www.webbymonks.com/plugintemplate/86/index.html#" title="undefined"><div class="error-box"><div class="error-box-left"></div> <div class="error-box-mid"><h3></h3></div> <div class="error-box-right"></div><div class="clear"></div></div></a></div></li>
+            <li><div class="elementWrapper"><input id="password" type="password" name="form" placeholder="Password" titile="Please Enter Password , Min 3 charter" class="textbg3 fromfield error"><a id="a_password" class="toltip exampleTip" href="http://www.webbymonks.com/plugintemplate/86/index.html#" title="Please Enter Password"><div class="error-box"><div class="error-box-left"></div> <div class="error-box-mid"><h3></h3></div> <div class="error-box-right"></div><div class="clear"></div></div></a></div></li>
+            <li><div class="elementWrapper"><input id="passwordConfirm" type="password" name="form" placeholder="Confirm password" title="Please Confirm Password By Retyping password" class="textbg3 fromfield"></div></li>
+        </ul>
+        <ul class="second">
+                    <li>
+                    <div class="fname">
+                    <div class="elementWrapper"><input id="fname" type="text" name="form" placeholder="First name" class="firstname fromfield"></div>
+                    </div>
+                    <div class="lname">
+                    <div class="elementWrapper"><input id="lname" type="text" name="form" placeholder="Last name" class="lastname last fromfield"></div>
+                    </div>
+                    <div class="clear"></div>
+                    </li>
+                    <li>
+              
+                     <div class="seleWrapper fromfield">
+                     <div class="elementWrapper"><select id="gender" class="textbg4 selectBox" style="display: none;">
+                     <option>Gender</option>
+                     <option>Male</option>
+                     <option>Female</option>
+                     </select></div><a class="selectBox textbg4 selectBox-dropdown" title="" tabindex="0" style="width: 300px; display: inline-block;"><span class="selectBox-label" style="width: 279px;">Gender</span><span class="selectBox-arrow"></span></a>
+                     </div>
+                    </li>
+                    <li>
+                    <div id="policy" class="agreementWrapper">
+                    <div class="elementWrapper"><label id="agreement" class="fromfield label" for="check1">I agree to the Terms of Service</label></div>
+                    <div class="elementWrapper"><input id="terms" type="checkbox" class="hidden"></div>
+                    </div>
+                    </li>
+                    <li class="news">
+                     <div id="specialOffer" class="specialoffr">
+                    <div class="elementWrapper"><label id="offer" class="fromfield label" for="check2">I want to receive news and special offers</label></div>
+                    <div class="elementWrapper"><input id="offers" type="checkbox" class="hidden"></div>
+                     </div>
+                    </li>
+                </ul>
+     </div>
+    <div class="footer-cont">
+         <!-- <input id="formSubmit" type="submit" name="b1" class="submit" value="Submit" />-->
+        <button id="formSubmit" class="submitBtn btn-8 btn-8g ">Submit</button>
+        <div class="clear"></div>
+    </div>
+</div><!--inner-contBox end here-->
+</form>
+</div>
+</div><!--comp-box end here-->
+<div class="wrapper"><!--wrapper start here-->
+</div><!--wrapper end here-->
+</div><!--container end here-->
+<script>
+		$(document).ready(function(e) {
+            $('#formSubmit').click(function(e){ e.preventDefault();
+				if(!$(this).hasClass('btn-success3d')){$(this).addClass('btn-success3d')}else{$(this).removeClass('btn-success3d');}
+				 setTimeout( function() { $('#formSubmit').removeClass('btn-success3d');  }, 2000 );
+			 });
+        });
+			
+			
+		</script>
+
+
+<ul class="selectBox-dropdown-menu selectBox-options textbg4-selectBox-dropdown-menu" style="display: none;"><li><a rel="Gender">Gender</a></li><li><a rel="Male">Male</a></li><li><a rel="Female">Female</a></li></ul><div class="tip-skyblue"><div class="tip-inner tip-bg-image"></div><div class="tip-arrow tip-arrow-top tip-arrow-right tip-arrow-bottom tip-arrow-left"></div></div><div class="tip-skyblue"><div class="tip-inner tip-bg-image"></div><div class="tip-arrow tip-arrow-top tip-arrow-right tip-arrow-bottom tip-arrow-left"></div></div></body></html>
