@@ -1,0 +1,303 @@
+
+$_randomize-prefixes: false;
+
+@function is-int($value){
+  @if (type-of($value) == 'number') and ($value % 1 == 0) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+@mixin keyframes($name) {
+  @if $_randomize-prefixes {
+    @-webkit-keyframes #{$name} {
+      @content;
+    }
+  }
+
+  @keyframes #{$name} {
+    @content;
+  }
+}
+
+@function limit($num, $min: 0, $max: 1) {
+  @if $max < $min {
+    $temp: $min;
+    $min: $max;
+    $max: $temp;
+  }
+  @if $num <= $max and $num >= $min { @return $num };
+  @if $num < $min { @return $min };
+  @if $num > $max { @return $max };
+}
+
+@function map-to-list($map){
+  $carbon: $map;
+  $keys: map-keys($carbon);
+  $mapvals: ();
+  $plainvals: ();
+  $restart: true;
+
+  @while $restart == true {
+
+    @each $key in $keys {
+      @if type-of(map-get($carbon, $key)) == 'map'{
+        $mapvals: map-merge($mapvals, map-get($carbon, $key));
+        $mapvals: map-remove($mapvals, $key);
+        $carbon: map-remove($carbon, $key);
+      }
+
+      @else {
+        $plainvals: append($plainvals, map-get($carbon, $key));
+        @if map-has-key($mapvals, $key){
+          $mapvals: map-remove($mapvals, $key);
+        }
+
+        $carbon: map-remove($carbon, $key);
+      }
+    }
+
+    $carbon: map-remove($carbon, map-keys($carbon));
+    $carbon: map-merge($mapvals, $carbon);
+    $keys: map-keys($carbon);
+
+    @if length($mapvals) == 0 {
+      $restart: false;
+    }
+  }
+
+  @return $plainvals;
+}
+
+@function random-between($min, $max) {
+  @if ((not is-int($min)) or (not is-int($max))) or
+       $min < 0 or $max < 0 {
+        @error '$min and $max must both be positive integers.';
+  }
+
+  @if $min > $max {
+    $old_min: $min;
+    $min: $max;
+    $max: $old_min;
+  }
+
+  @return ($min - 1) + random(($max - $min) + 1);
+}
+
+@function random-decimal-between($min, $max) {
+  @if type-of($min) != 'number' or
+      type-of($max) != 'number' or
+      $min < 0 or
+      $max < 0 {
+        @error '$min and $max must both be positive numbers.';
+  }
+
+  @if $min > $max {
+    $old_min: $min;
+    $min: $max;
+    $max: $old_min;
+  }
+
+  @return (($max - $min) * random()) + $min;
+}
+
+@function roll($die) {
+  // method to typecast strings to numbers adapted from http://hugogiraudel.com/2014/01/15/sass-string-to-number/
+
+  // Account for a few potential mistakes in input
+  @if type-of($die) != 'number' {
+    @error '$die, "#{$die}", was not a number; was expecting input in the format of, e.g., 2d6';
+  }
+
+  @if unitless($die) {
+    @error '$die, "#{$die}", was unitless; was expecting input in the format of, e.g., 2d6';
+  }
+
+  // Parse the input into two strings
+  $num-of-dice: str-slice($die + '', 1, str-index($die + '', d) - 1);
+  $die-max: str-slice($die + '', str-index($die + '', d) + 1);
+
+  // Define some variables at a scope outside the loops below
+  $result: 0;
+  $number-storage: 0;
+
+  @each $target in $num-of-dice, $die-max {
+    $strings: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9';
+
+    // For each digit in each number-string, convert it from a string to a number
+    @for $i from 1 through str-length(#{$target}) {
+      $char: str-slice($target, $i, $i);
+      $index: index($strings, $char);
+      $number-storage: $number-storage * 10 +  $index - 1;
+    }
+
+    // Assign the results of the above conversion to their proper vars
+    @if $target == $num-of-dice {
+      $num-of-dice: $number-storage;
+      $number-storage: 0;
+    } @else if $target == $die-max {
+      $die-max: $number-storage;
+    }
+  }
+
+  // Finally, roll the dice!
+  @for $i from 1 through $num-of-dice {
+    $result: $result + random($die-max);
+  }
+
+  @return $result;
+}
+
+@function random-color($multiplier: (1, 1, 1), $opacity: '') {
+  @each $val in $multiplier {
+    @if $val < 0 or $val == 0 {
+      @error 'RGBa multipliers must be positive.';
+    }
+  }
+
+  $r: round(255 * nth($multiplier, 1));
+  $g: round(255 * nth($multiplier, 2));
+  $b: round(255 * nth($multiplier, 3));
+
+  @if type-of($opacity) == 'number' {
+    @if $opacity < 0 or $opacity > 1 {
+      @warn 'opacity should be a number between 0 and 1: `#{$opacity}` given. As a result, the color will be fully opaque.';
+      $opacity: 1;
+    }
+
+    @return rgba(random($r), random($g), random($b), $opacity);
+  }
+
+  @return rgba(random($r), random($g), random($b), random());
+}
+
+@function random-color-by-hue($hue, $opacity: 1) {
+  @if $hue < 0 {
+    @warn 'hue must be greater than 0, but `#{$hue}` given. Clamping to 0';
+    $hue: 0;
+  }
+
+  @if $hue > 360 {
+    $hue: $hue % 360;
+  }
+
+  @if $opacity < 0 or $opacity > 1 {
+    @warn 'opacity should be a number between 0 and 1: `#{$opacity}` given. As a result, the color will be fully opaque.';
+    $opacity: 1;
+  }
+
+  @return hsla($hue, random-between(20, 100), random-between(20, 80), $opacity);
+}
+
+@function color-with-random-hue($saturation: 100, $lightness: 50, $opacity: 1) {
+  $saturation: limit($saturation, 0, 100);
+  $lightness: limit($lightness, 0, 100);
+  $opacity: limit($opacity);
+
+  @return hsla(random-between(0, 360), percentage($saturation/100), percentage($lightness/100), $opacity);
+}
+
+@function random-mix($color-1, $color-2, $min-1: 10%, $max-1: 90%){
+  @return mix($color-1, $color-2, random-between($min-1, $max-1));
+}
+
+@function random-value($value-list...) {
+  @if type-of(nth($value-list, 1)) == 'list' and length($value-list) == 1 {
+    $value-list: nth($value-list, 1);
+  }
+
+  @return nth($value-list, random(length($value-list)));
+}
+
+@function random-value-from-map($map){
+  @return random-value(map-to-list($map));
+}
+
+@function shuffle($list) {
+  $list-length: length($list);
+
+  @while($list-length > 0) {
+    $rand: random($list-length);
+    $temp: nth($list, $rand);
+    $list: set-nth($list, $rand, nth($list, $list-length));
+    $list: set-nth($list, $list-length, $temp);
+    $list-length: $list-length - 1;
+  }
+
+  @return $list;
+}
+
+@mixin random-iterate($number-of-items, $property, $function, $args...) {
+  $counter: 1;
+
+  @if ($number-of-items < 1) or (type-of($number-of-items) != 'number') {
+    @error '$number-of-items in random-iterate must be an integer greater than or equal to 1'
+  }
+
+  @while $number-of-items >= $counter {
+    &:nth-child(#{$counter}) {
+      #{$property}: call($function, $args...);
+    }
+
+    $counter: $counter + 1;
+  }
+}
+
+@mixin random-animate($num-elements, $prop-to-animate, $animation-props, $steps, $function-name, $args...) {
+  @if (not is-int($steps)) or ($steps < 2) {
+    @error '$steps must be an integer with a value of at least 1.';
+  }
+
+  @if (not is-int($num-elements)) or ($num-elements < 1) {
+    @error '$num-elements must be a positive integer.';
+  }
+
+  @if not function-exists($function-name) {
+    @error 'The given function name, `#{$function-name}`, does not exist';
+  }
+
+  $counter: 1;
+  @while $num-elements >= $counter {
+    $animation-name: unique-id();
+
+
+    // Generate the proper number and % of keyframe steps
+    $step-list: ();
+    $steps-to-add: $steps;
+
+    @while $steps-to-add > 0 {
+      $step-list: join(floor(($steps-to-add - 1) * (100 / ($steps - 1))), $step-list);
+      $steps-to-add: $steps-to-add - 1;
+    }
+
+    // Generate the results of the call before-hand to preserve
+    // results across prefixes
+    $steps-length: length($step-list);
+    $result-list: ();
+
+    @for $i from 1 through $steps-length {
+      $result-list: append($result-list, (call($function-name, $args...)));
+    }
+
+    // Generate the keyframes using the above-generated information
+    &:nth-child(#{$counter}) {
+      @include keyframes($animation-name) {
+
+        @for $i from 1 through $steps-length {
+          #{nth($step-list, $i)}% {
+            #{$prop-to-animate}: nth($result-list, $i);
+          }
+        }
+      }
+
+      // Call the keyframes
+      @if $_randomize-prefixes {
+        -webkit-animation: $animation-name $animation-props;
+      }
+      animation: $animation-name $animation-props;
+    }
+
+    $counter: $counter + 1;
+  }
+}

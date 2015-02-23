@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <title>CodePen - Motion Blur Experiment</title>
+
+  <link rel="stylesheet" href="css/normalize.css">
+
+    <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
+
+</head>
+
+<body>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+<div class="intro">
+  <h1>Motion Blur Experiment</h1>
+  <h2>by <a href="http://codepen.io/lbebber">Lucas Bebber</a></h2>
+  <p>Click on the button below</p>
+</div>
+<button class="open-modal">Open Modal</button>
+
+<div class="modal-overlay"></div>
+
+<div class="modal">
+  <button class="close-modal">×</button>
+  <div class="icon">
+    <i class="fa fa-user-plus"></i> 
+  </div>
+  <h1>Some Title</h1>
+  <input class="input-text" type="text" placeholder="some field"/>
+  <input class="input-text" type="text" placeholder="some other field"/>
+  <input class="input-submit" type="submit" value="Some Button"/>
+</div>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="filters">
+    <defs>
+      <filter id="blur">
+          <feGaussianBlur id="blur-filter" in="SourceGraphic" stdDeviation="0,0" />
+      </filter>
+  </defs>
+</svg>
+
+  <script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.15.1/TweenMax.min.js'></script>
+
+  <script src="js/index.js"></script>
+
+</body>
+
+</html>
