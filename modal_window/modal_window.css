@@ -1,0 +1,79 @@
+* {
+  box-sizing: border-box;
+  outline: none;
+}
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+.modal_window header {
+  background: #e1e1e1;
+  border: 1px solid #e1e1e1;
+  border-bottom: 1px solid #cecece;
+  text-align: center;
+}
+.modal_window_container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 250px;
+  margin: -125px 0 0 -150px;
+}
+.modal_window, .modal_window_back1, .modal_window_back2 {
+  border: 1px solid #cecece;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #ededed;
+}
+.modal_window_back1 {
+  transform: rotate(2deg);
+  z-index: -1;
+}
+.modal_window_back2 {
+  transform: rotate(-3deg);
+  z-index: -2;
+}
+.modal_window header h1 {
+  color: #7E7E7E;
+  font-weight: bold;
+  font-size: 25px;
+  text-align: center;
+}
+.form-controls {
+  padding: 10px 25px 10px 25px;
+  line-height: 50px;
+}
+.form-control {
+  width: 100%;
+  height: 34px;
+  border: 1px solid #dbdbdb;
+  padding-left: 40px;
+  /*margin-bottom: 20px;*/
+  transition: all 0.5s ease;
+}
+.form-control:focus {
+  border: 1px solid blue;
+}
+.form-control.error {
+  border: 1px solid #F00;
+  box-shadow: 0 0 5px 2px #EDA6A6;
+}
+.form-actions {
+  background: #e1e1e1;
+  /*border: 1px solid #e1e1e1;*/
+  border-top: 1px solid #cecece;
+  text-align: center;
+  padding: 13px 0 13px 0;
+}
+.form-action {
+  font-weight: bold;
+  font-size: 15px;
+  background: #0e83cd;
+  padding: 8px 28px 8px 28px;
+  cursor: pointer;
+  text-align: center;
+  color: #fff;
+}
